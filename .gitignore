@@ -1,0 +1,13 @@
+node_modules/
+.env
+.env.*
+!.env.example
+*.log
+*.zip
+.DS_Store
+Thumbs.db
+check-deepseek-local.mjs
+inspect-local-config.cjs
+update-whale-brand.cjs
+/*-preview.png
+sandbox.txt

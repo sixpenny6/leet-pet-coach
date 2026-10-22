@@ -1,0 +1,16 @@
+{
+  "name": "leet-pet-coach",
+  "version": "1.2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "preview": "node preview/server.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "sharp": "0.35.5"
+  }
+}
