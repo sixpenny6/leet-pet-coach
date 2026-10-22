@@ -1,0 +1,22 @@
+/* Whale-girl mascot theme. Keep all teaching/chat behavior in the base panel. */
+#pet,#panel-head{cursor:grab}#panel-head{touch-action:none;user-select:none}#panel-head button{cursor:pointer}#pet.dragging,#panel-head.dragging{cursor:grabbing}#pet.dragging .whale-sprite{animation:none;transform:none}
+#pet{width:112px;height:148px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;color:#476e9b}
+#pet .whale-sprite{display:block;width:112px;height:124px;object-fit:contain;pointer-events:none;user-select:none;filter:drop-shadow(0 3px 3px #284f8422);animation:whale-float 3.8s ease-in-out infinite;transform-origin:50% 80%}
+#pet .pet-label{font-size:9px;letter-spacing:.3px;white-space:nowrap;margin-top:0;padding:3px 9px;color:#5a7d9e;background:#f6fafff5;border-color:#d9e7f5;box-shadow:0 3px 12px #3c6e9b15}
+#pet .pet-label i{background:#70a6d8}
+#pet .speech{bottom:151px;right:0;background:#f8fbff;border-color:#d4e4f3;color:#6c8baa}
+#pet[data-mood=thinking] .whale-sprite{animation:whale-think 1.5s ease-in-out infinite}
+#pet[data-mood=happy] .whale-sprite{animation:whale-cheer .8s ease-in-out 3}
+#panel{background:#f8fbff;border-color:#d9e5f1;box-shadow:0 18px 70px #233c6029,0 2px 10px #233c6010}
+header{background:#eef5fc}.avatar{background:#e4effc;border-color:#cedef1;padding:0;overflow:hidden}.avatar img{width:38px;height:38px;object-fit:cover}.heading strong{color:#385b81;font-size:14px}.heading small{color:#8ba2bb}.topic b{color:#6482a1}.dot{background:#89acd2}.modes button.selected{color:#507aa9;background:#e9f2fd;border-color:#b8d0ec}.sendbar #send{background:#5d85b1}.message.user .bubble{background:#eaf3ff;border-color:#d6e6f7;color:#4c7198}#question{background:#fff;border-color:#d4e2f2;color:#3e648e}#question::placeholder{color:#9eafc2}#notice{color:#7895b3}#notice.error{color:#af7856}.code-box{background:#283c59}#source{color:#91a2b5}:focus-visible{outline-color:#78a3d1}
+@keyframes whale-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes whale-think{0%,100%{transform:translateY(-1px) rotate(-2deg)}50%{transform:translateY(-4px) rotate(2deg)}}
+@keyframes whale-cheer{0%,100%{transform:translateY(0) rotate(0)}40%{transform:translateY(-7px) rotate(-3deg)}70%{transform:translateY(-2px) rotate(3deg)}}
+@media(prefers-reduced-motion:reduce){#pet .whale-sprite{animation:none!important}}
+#pet[data-animation=off] .whale-sprite{animation:none!important;transform:none!important}
+#pet[data-animation=on]:not([data-mood=thinking]):not([data-mood=happy]) .whale-sprite{animation:none}
+#motion-toggle{font-size:11px;border:1px solid #cfdff0;border-radius:6px;height:24px;width:25px;color:#7194ba}
+.bubble .md-paragraph{margin:0 0 10px;white-space:pre-wrap}.bubble .md-paragraph:last-child{margin-bottom:0}
+.bubble .inline-code{background:#edf3fc;border:1px solid #dbe6f5;border-radius:4px;padding:1px 4px;color:#426d9f;font:11px/1.8 Consolas,"Microsoft YaHei",monospace;box-decoration-break:clone;-webkit-box-decoration-break:clone;white-space:pre-wrap;overflow-wrap:anywhere}
+.bubble strong{font-weight:650;color:#355f8a}.bubble .md-heading{margin:12px 0 6px;font-size:12px;font-weight:650;color:#426b97}.bubble .md-heading:first-child{margin-top:0}
+.bubble .md-list{margin:6px 0 11px;padding-left:20px}.bubble .md-list li{margin:4px 0;padding-left:1px}.bubble .md-quote{margin:8px 0;padding:5px 10px;border-left:3px solid #c1d6ee;background:#f0f5fc;color:#7891ac;white-space:pre-wrap}.bubble hr{border:0;border-top:1px solid #e0e9f4;margin:12px 0}.bubble a{color:#507cac;text-decoration:underline;text-underline-offset:2px}.bubble .code-box pre{white-space:pre}

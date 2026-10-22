@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "刷题搭子 · Leet Pet Coach",
+  "version": "1.2.0",
+  "description": "住在力扣页面的蓝色鲸鱼娘：读取当前代码、分步提示、多轮对话，自定义模型供应商。",
+  "minimum_chrome_version": "120",
+  "permissions": ["storage", "scripting"],
+  "host_permissions": ["https://leetcode.cn/*", "https://leetcode.com/*"],
+  "optional_host_permissions": ["https://*/*", "http://*/*"],
+  "background": {"service_worker": "background.js", "type": "module"},
+  "icons": {"16":"icon16.png","32":"icon32.png","48":"icon48.png","128":"icon128.png"},
+  "action": {"default_title": "打开刷题搭子", "default_icon":{"16":"icon16.png","32":"icon32.png"}},
+  "options_page": "options.html",
+  "content_scripts": [{
+    "matches": ["https://leetcode.cn/*", "https://leetcode.com/*"],
+    "js": ["rich-text.js", "content.js"],
+    "run_at": "document_idle"
+  }],
+  "web_accessible_resources": [{
+    "resources": ["panel.css", "whale.css", "assets/whale-idle.png", "assets/whale-idle.gif", "assets/whale-thinking.png", "assets/whale-happy.png", "assets/whale-avatar.png"],
+    "matches": ["https://leetcode.cn/*", "https://leetcode.com/*"]
+  }],
+  "content_security_policy": {"extension_pages": "script-src 'self'; object-src 'none'"}
+}
