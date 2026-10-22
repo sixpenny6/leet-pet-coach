@@ -1,0 +1,13 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+await import('../extension/rich-text.js');
+const {inlineTokens,parseBlocks,render}=globalThis.LeetPetRichText;
+test('inline code renders as tokens without decorative backticks',()=>{const t=inlineTokens('固定 `i` 后，从 `i + 1` 开始。');assert.deepEqual(t.filter(x=>x.type==='code').map(x=>x.text),['i','i + 1']);assert(!t.map(x=>x.text).join('').includes('`'));});
+test('code strings keep meaningful apostrophes and quotes',()=>{assert.equal(inlineTokens('`print(\'hello\')`')[0].text,"print('hello')");const b=parseBlocks('```python\ns = "it\'s fine"\n```')[0];assert.equal(b.text,'s = "it\'s fine"');assert.equal(b.closed,true);});
+test('headings, paragraphs, ordered and unordered lists are recognized',()=>{const b=parseBlocks('## 一步一步\n\n先看例子。\n\n1. 固定下标\n2. 寻找搭档\n\n- 检查重复\n- 检查边界');assert.deepEqual(b.map(x=>x.type),['heading','paragraph','ol','ul']);assert.equal(b[2].items.length,2);});
+test('incomplete streaming code fence stays a code block',()=>{const b=parseBlocks('看这里：\n```python\nfor j in range(');assert.equal(b.at(-1).type,'code');assert.equal(b.at(-1).closed,false);assert.equal(b.at(-1).text,'for j in range(');});
+test('safe formatting recognizes bold and leaves unsafe links as text',()=>{assert.equal(inlineTokens('**正确**')[0].type,'strong');assert.equal(inlineTokens('[点击](javascript:alert(1))')[0].type,'text');assert.equal(inlineTokens('[文档](https://example.com)')[0].type,'link');});
+class Element {constructor(tag){this.tag=tag;this.children=[];this._text='';}append(...children){this.children.push(...children);}set textContent(value){this._text=String(value);this.children=[];}get textContent(){return this._text+this.children.map(c=>c.textContent).join('');}}
+globalThis.document={createElement:tag=>new Element(tag),createTextNode:text=>({tag:'#text',textContent:text})};
+test('HTML from model remains text rather than an executable element',()=>{const parent=new Element('div');render(parent,'<img src=x onerror=alert(1)>');assert.equal(parent.children[0].tag,'p');assert.equal(parent.textContent,'<img src=x onerror=alert(1)>');assert.equal(parent.children[0].children[0].tag,'#text');});
+test('rendered code, emphasis and lists use safe DOM elements',()=>{const parent=new Element('div');render(parent,'**重点**：看 `i`\n\n- 一个数\n- 另一个数\n\n```python\nprint("ok")\n```');assert.equal(parent.children[0].children[0].tag,'strong');assert(parent.children[0].children.some(x=>x.tag==='code'));assert.equal(parent.children[1].tag,'ul');assert.equal(parent.children[2].className,'code-box');assert.equal(parent.children[2].children[1].textContent,'print("ok")');});
